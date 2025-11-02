@@ -11,7 +11,6 @@ export const App: React.FC = () => {
   const initialPerPage = Number(searchParams.get('perPage')) || 5;
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [perPage, setPerPage] = useState(initialPerPage);
-  const totalPages = Math.ceil(items.length / perPage);
   const start = (currentPage - 1) * perPage;
   const visibleItems = items.slice(start, start + perPage);
 
@@ -32,6 +31,7 @@ export const App: React.FC = () => {
           <select
             data-cy="perPageSelector"
             id="perPageSelector"
+            value={perPage}
             onChange={event => {
               setPerPage(Number(event.target.value));
               setCurrentPage(1);
@@ -50,7 +50,8 @@ export const App: React.FC = () => {
         </label>
       </div>
       <Pagination
-        totalPages={totalPages}
+        total={items.length}
+        perPage={perPage}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
       />
